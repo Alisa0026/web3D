@@ -28,12 +28,25 @@ const Page = () => {
 
     sence.add(axesHelper)
 
+    // 2.2 添加全局光照
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+    // 2.3 添加方向光照，这样效果就比较立体了
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
+
+    sence.add(ambientLight, directionalLight)
+
     // 创建立方体的几何体
     const geometry = new THREE.BoxGeometry(1, 1, 1)
     // 创建立方体的基础材质
-    const material = new THREE.MeshBasicMaterial({
+    // const material = new THREE.MeshBasicMaterial({
+    //   color: 0x1890ff,
+    // })
+
+    // 2.1 更换对光照敏感的材质对象,要有光照才能看到
+    const material = new THREE.MeshLambertMaterial({
       color: 0x1890ff,
     })
+
     // 创建3D物体对象 网格对象
     const mesh = new THREE.Mesh(geometry, material)
     sence.add(mesh)
@@ -62,11 +75,11 @@ const Page = () => {
     // 创建渲染器
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas,
-      // 1.解决锯齿：抗锯齿效果
+      // 1.1 解决锯齿：抗锯齿效果
       antialias: true,
     })
 
-    // 设置渲染器屏幕像素比，提高渲染精度
+    // 1.2 设置渲染器屏幕像素比，提高渲染精度
     renderer.setPixelRatio(window.devicePixelRatio || 1)
 
     // 设置渲染器大小
