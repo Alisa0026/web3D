@@ -37,18 +37,38 @@ const Page = () => {
 
     // 创建立方体的几何体
     const geometry = new THREE.BoxGeometry(1, 1, 1)
-    // 创建立方体的基础材质
-    // const material = new THREE.MeshBasicMaterial({
-    //   color: 0x1890ff,
-    // })
 
-    // 2.1 更换对光照敏感的材质对象,要有光照才能看到
-    const material = new THREE.MeshLambertMaterial({
+    // console.log(geometry);
+    
+    const faces = []
+    // 3.2 循环 groups，随机生成材质对象并给颜色，放到faces中，放到mesh中
+    for (let i = 0; i < geometry.groups.length; i++) {
+      const material = new THREE.MeshBasicMaterial({
+        color: 0xffffff * Math.random(),
+      })
+      faces.push(material)
+    }
+
+    const mesh = new THREE.Mesh(geometry, faces)
+
+    /*
+    // 创建立方体的基础材质
+    const material = new THREE.MeshBasicMaterial({
       color: 0x1890ff,
     })
 
+    
+    // 2.1 更换对光照敏感的材质对象,要有光照才能看到
+    const material = new THREE.MeshLambertMaterial({
+      color: 0x1890ff,
+      // 3.1 设置材质的透明度，可以看到一个平面是两个三角形面，所以有6个顶点
+      wireframe: true,
+    })
     // 创建3D物体对象 网格对象
     const mesh = new THREE.Mesh(geometry, material)
+    */
+
+
     sence.add(mesh)
 
     // 创建相机对象，透视相机:可以模拟人眼观察角度，近大远小
