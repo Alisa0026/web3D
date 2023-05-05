@@ -26,8 +26,10 @@ const Page = () => {
     const sence = new THREE.Scene()
     // 创建辅助坐标系
     const axesHelper = new THREE.AxesHelper()
+    // 创建辅助平面
+    const gridHelper = new THREE.GridHelper()
 
-    sence.add(axesHelper)
+    sence.add(axesHelper,gridHelper)
 
     // 2.2 添加全局光照
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
@@ -124,6 +126,9 @@ const Page = () => {
       // mesh.rotation.y += elapsedTime / 1000 // 旋转
       // mesh.position.x += elapsedTime / 1000 // 沿着x轴远离原点
       // mesh.scale.x += elapsedTime / 1000 // 放大
+
+      mesh.position.x = Math.cos(elapsedTime); //沿着x轴进行往复运动 
+      mesh.position.y = Math.sin(elapsedTime); //沿着y轴进行往复运动 
 
       orbitControls.update();
 

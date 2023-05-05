@@ -15,4 +15,5 @@
 3. 6 个面能不能有不同颜色
    - geometry.groups 里是正方体的6个面，通过循环，给每个面设置不通材质
    - 放到faces数组中，然后给到 mesh
-4. 
+4. 计算时间数据  const clock = new THREE.Clock()
+5. 生成辅助平面 new THREE.GridHelper()
