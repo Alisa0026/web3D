@@ -2,6 +2,7 @@
 
 ## 1. 问题：
 1. 正交相机没太看懂
+2. 不能沿着x/z轴平面进行360度转圈
 
 
 ## 2. 总结内容
@@ -17,3 +18,21 @@
    - 放到faces数组中，然后给到 mesh
 4. 计算时间数据  const clock = new THREE.Clock()
 5. 生成辅助平面 new THREE.GridHelper()
+6. 创建轨道控制器：
+   `import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';`
+   
+7. 画布性能监控：
+   `import Stats from 'three/examples/jsm/libs/stats.module'`
+8. 屏幕自适应
+```
+    window.addEventListener( 'resize', function () {
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+}, false );
+```
+
+1.  

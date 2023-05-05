@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import Stats from 'three/examples/jsm/libs/stats.module'
 
 const Page = () => {
   useEffect(() => {
@@ -29,7 +30,7 @@ const Page = () => {
     // 创建辅助平面
     const gridHelper = new THREE.GridHelper()
 
-    sence.add(axesHelper,gridHelper)
+    sence.add(axesHelper, gridHelper)
 
     // 2.2 添加全局光照
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
@@ -117,6 +118,13 @@ const Page = () => {
     // 惯性属性
     orbitControls.enableDamping = true
 
+    // 添加性能监视器
+    const stats = new Stats()
+    stats.setMode(0)
+    // 将性能监视器添加到页面中
+    document.body.appendChild(stats.domElement)
+
+
     // 计算时间数据
     const clock = new THREE.Clock()
 
@@ -127,17 +135,32 @@ const Page = () => {
       // mesh.position.x += elapsedTime / 1000 // 沿着x轴远离原点
       // mesh.scale.x += elapsedTime / 1000 // 放大
 
+      /*
       mesh.position.x = Math.cos(elapsedTime); //沿着x轴进行往复运动 
       mesh.position.y = Math.sin(elapsedTime); //沿着y轴进行往复运动 
+      */
+
+      // 相机观察角度变化
+      // camera.position.x = Math.cos(elapsedTime)
+      // camera.position.y = Math.sin(elapsedTime)
 
       orbitControls.update();
-
+      stats.update();//更新帧数
       renderer.render(sence, camera)
       window.requestAnimationFrame(tick);
 
     }
 
     tick();
+
+    window.addEventListener('resize', () => {
+      // 根据屏幕宽高比重新设置aspect属性
+      camera.aspect = window.innerWidth / window.innerHeight;
+      // 调用相机投影矩阵更新函数
+      camera.updateProjectionMatrix();
+      // 更新渲染器大小
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    })
   }, []);
 
   return <>
