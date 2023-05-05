@@ -115,17 +115,21 @@ const Page = () => {
     // 惯性属性
     orbitControls.enableDamping = true
 
-    let timer;
+    // 计算时间数据
+    const clock = new THREE.Clock()
 
     const tick = () => {
-      clearTimeout(timer)
-      timer = setTimeout(() => {
-        orbitControls.update();
+      // 获取时钟启动后的秒数
+      const elapsedTime = clock.getElapsedTime()
+      // mesh.rotation.y += elapsedTime / 1000 // 旋转
+      // mesh.position.x += elapsedTime / 1000 // 沿着x轴远离原点
+      // mesh.scale.x += elapsedTime / 1000 // 放大
 
-        renderer.render(sence, camera)
-        tick();
+      orbitControls.update();
 
-      });
+      renderer.render(sence, camera)
+      window.requestAnimationFrame(tick);
+
     }
 
     tick();
