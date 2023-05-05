@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'dat.gui';
 
+// 2-0-2 dat.gui 调试3D对象， 正交相机
 const Page = () => {
   useEffect(() => {
 
@@ -199,6 +200,7 @@ const Page = () => {
         this.controls()
         this.tick()
         this.fitView()
+        // TODO dat.gui
         this.datGui()
       }
     }

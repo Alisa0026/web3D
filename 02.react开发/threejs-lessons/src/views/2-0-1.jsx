@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import * as dat from 'dat.gui';
 
+// 2-0-1 相机视角+观测
 const Page = () => {
   useEffect(() => {
 
@@ -85,55 +85,14 @@ const Page = () => {
         this.otherCamera = otherCamera
         // this.camera = otherCamera
 
-        // 创建第二个相机
-        const watcherCamera = new THREE.PerspectiveCamera(75, this.width / this.height, 0.1, 100)
+        // TODO：创建第二个相机
+        const watcherCamera = new THREE.PerspectiveCamera(75, this.width / this.height)
 
         watcherCamera.position.set(2, 2, 6)
         watcherCamera.lookAt(this.sence.position)
-        this.watcherCamera = watcherCamera
         this.sence.add(watcherCamera)
         this.camera = watcherCamera
-      },
-      datGui() {
-        const _this = this
-        const gui = new dat.GUI();
-        const parmas = {
-          wireframe: false,
-          switchCamera() {
-            // 正交相机，控制器行为要关闭
-            if (_this.camera.type === 'OrthographicCamera') {
-              _this.camera = _this.watcherCamera
-              _this.orbitControls.enabled = true
-            } else {
-              _this.camera = _this.otherCamera
-              _this.orbitControls.enabled = false
-            }
-          }
-        }
-        // 相机的position属性，name 加别名
-        gui.add(this.camera.position, 'x', 0.1, 10, 0.1).name('positionX')
-        gui.add(this.camera.rotation, 'x', 0.1, 10, 0.1).name('rotationX')
-        // 近平面
-        gui.add(this.camera, 'near', 0.01, 10, 0.01).onChange(val => {
-          this.camera.near = val
-          this.camera.updateProjectionMatrix();
-        })
-        // 远平面
-        gui.add(this.camera, 'far', 1, 100, 1).onChange(val => {
-          this.camera.far = val
-          this.camera.updateProjectionMatrix();
-        })
-        // 缩放
-        gui.add(this.camera, 'zoom', 0.1, 10, 0.1).onChange(val => {
-          this.camera.zoom = val
-          this.camera.updateProjectionMatrix();
-        })
-        // 相机的fov属性 是Boolean选项
-        gui.add(parmas, 'wireframe').onChange(val => {
-          this.mesh.material.wireframe = val
-        })
-        // 点击这个switchCamera方法会执行
-        gui.add(parmas, 'switchCamera')
+
       },
       helpers() { // 创建辅助坐标系
         // 创建辅助坐标系
@@ -199,7 +158,6 @@ const Page = () => {
         this.controls()
         this.tick()
         this.fitView()
-        this.datGui()
       }
     }
 
