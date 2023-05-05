@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const Page = () => {
   useEffect(() => {
@@ -39,7 +40,7 @@ const Page = () => {
     const geometry = new THREE.BoxGeometry(1, 1, 1)
 
     // console.log(geometry);
-    
+
     const faces = []
     // 3.2 循环 groups，随机生成材质对象并给颜色，放到faces中，放到mesh中
     for (let i = 0; i < geometry.groups.length; i++) {
@@ -106,6 +107,28 @@ const Page = () => {
     renderer.setSize(width, height)
     // 执行渲染
     renderer.render(sence, camera)
+
+
+    // 创建轨道控制器,实际是通过鼠标控制相机的位置
+    const orbitControls = new OrbitControls(camera, canvas)
+
+    // 惯性属性
+    orbitControls.enableDamping = true
+
+    let timer;
+
+    const tick = () => {
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        orbitControls.update();
+
+        renderer.render(sence, camera)
+        tick();
+
+      });
+    }
+
+    tick();
   }, []);
 
   return <>
