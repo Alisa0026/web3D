@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'dat.gui';
 
+// 2-0-4 包围盒与视锥体
 const Page = () => {
   useEffect(() => {
 
