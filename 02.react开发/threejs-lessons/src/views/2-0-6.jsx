@@ -5,6 +5,7 @@ import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { HeartCurve } from 'three/examples/jsm/curves/CurveExtras'
 import * as dat from 'dat.gui';
 
+// 2-0-6 相机控制器
 const Page = () => {
   useEffect(() => {
 
