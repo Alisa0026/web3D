@@ -6,7 +6,7 @@ import { HeartCurve } from 'three/examples/jsm/curves/CurveExtras'
 import * as dat from 'dat.gui';
 
 /**
- * 3-0-2 认识几何体2
+ * 3-0-1 认识几何体1
  */
 const Page = () => {
   useEffect(() => {
@@ -47,39 +47,38 @@ const Page = () => {
       },
       createObjects() {
 
+        const geometry = new THREE.BufferGeometry();
+        // 创建简单的矩形. 在这里我们左上和右下顶点被复制了两次。
+        const vertices = new Float32Array([
+          -1.0, -1.0, 1.0, // 第1个顶点 (xyz)
+          1.0, -1.0, 1.0, // 第2个顶点 (xyz)
+          1.0, 1.0, 1.0, // 第3个顶点 (xyz)
 
-        const plane = new THREE.PlaneGeometry(1, 1, 1);
+          1.0, 1.0, 1.0, // 第4个...
+          -1.0, 1.0, 1.0,
+          -1.0, -1.0, 1.0,
+        ]);
+
+        // 第二个参数 3 表示每个顶点都是三个值构成。
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3)); // 这里是告诉几何体这组数据就是顶点的坐标信息
 
         // 设置表面颜色
-        const material = new THREE.PointsMaterial({
+        const material = new THREE.MeshBasicMaterial({
           color: '#1890ff',
           // wireframe: true,
-          side: THREE.DoubleSide,//TODO 此时旋转就可以看到两面了
         });
 
         // 创建3D物体对象 网格对象
-        const mesh = new THREE.Mesh(plane, material)
+        const mesh = new THREE.Mesh(geometry, material)
 
-        mesh.rotation.x = - Math.PI / 2
-        mesh.position.y = -0.5
-        mesh.scale.x = 2
+        // PlaneGeometry 是对 Float32Array的封装
+        // const plane = new THREE.PlaneGeometry(); 
+        const plane = new THREE.BoxGeometry(1, 1, 1);
+        const mesh1 = new THREE.Mesh(plane, material)
 
-        // 立方体
-        const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
-        const box = new THREE.Mesh(boxGeometry, material)
-        box.position.x = -2
 
-        // 圆锥体
-        const coneGeometry = new THREE.ConeGeometry(1, 2, 32)
-        const cone = new THREE.Mesh(coneGeometry, material)
-        cone.position.x = 2
-
-        // 圆柱体
-        const cylinderGeometry = new THREE.CylinderGeometry(1, 1, 2, 32, 32)
-        const cylinder = new THREE.Mesh(cylinderGeometry, material)
-        cylinder.position.x = 4
-
-        this.sence.add(mesh, box, cone, cylinder)
+        this.sence.add(mesh, mesh1)
+        this.mesh = mesh
       },
       createCamera() { // 创建相机
         const aspect = this.width / this.height
