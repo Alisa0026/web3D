@@ -7,7 +7,7 @@ import { HeartCurve } from 'three/examples/jsm/curves/CurveExtras'
 import * as dat from 'dat.gui';
 
 /**
- * 3-1-
+ * 3-1 几何体属性与动画库
  */
 const Page = () => {
   useEffect(() => {
